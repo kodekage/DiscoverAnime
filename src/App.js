@@ -22,7 +22,7 @@ function App() {
 
   return (
     <Box p={2} mx="auto" textAlign="center">
-      <Heading as="h2" color="white">Anime Finder</Heading>
+      <Heading as="h2" color="white">DiscoverAnime</Heading>
 
       <Box Box d="flex" justifyContent="center">
         <Input w="50%" value={value} onChange={handleChange} placeholder="Enter movie name" p="3"/>
