@@ -1,10 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {Box, Grid, Heading, Input, PseudoBox, Image, Stat, StatGroup, StatLabel, StatNumber, StatHelpText, StatArrow} from "@chakra-ui/core";
+import {
+  Box,
+  Heading,
+  Input,
+  Image,
+  SimpleGrid,
+  useDisclosure,
+  Modal,
+  ModalBody,
+  ModalOverlay,
+  ModalContent,
+  ModalCloseButton,
+  ModalHeader,
+  Text,
+  Stat,
+  StatNumber,
+  StatLabel,
+  StatGroup,
+  InputGroup,
+  Icon,
+  InputRightElement
+} from "@chakra-ui/core";
 
 function App() {
-  const [value, updateValue] = useState("naruto");
-  const [query, updateQuery] = useState("naruto");
+  const [value, updateValue] = useState("");
+  const [query, updateQuery] = useState("psycho-pass");
   const [movies, updateMovies] = useState({results: []})
   const handleChange = event => updateValue(event.target.value);
   const handleSubmit = (e) => {
@@ -22,49 +43,57 @@ function App() {
 
   return (
     <Box p={2} mx="auto" textAlign="center">
-      <Heading as="h2" color="white">DiscoverAnime</Heading>
+      <Heading as="h2" color="white">Discover Anime</Heading>
 
       <form onSubmit={handleSubmit}>
-      <Box d="flex" justifyContent="center">
-        <Input w="50%" value={value} onChange={handleChange} placeholder="Enter anime title" p="3"/>
-        <PseudoBox borderColor="blue" as="button" size="md" py="2" w="100px" bg="blue" onClick={handleSubmit}>Submit</PseudoBox>
-      </Box>
+      <InputGroup size="md" w="70%" m="auto">
+        <Input value={value} onChange={handleChange} placeholder="Enter anime title" m="0"/>
+        <InputRightElement children={<Icon name="search" color="green.500" />}/>
+      </InputGroup>
       </form>
 
-      <Box d="flex" flexWrap="wrap" justifyContent="center" alignItems="center" color="white" my="5">
-        {movies.results.map(item => {if (item["poster_path"]) {
-          return (
-          <Box key={item.id} w="40%" h="300px" bg="#111" d="flex" m="3" justifyContent="between" alignItems="start">
-            <Image h="100%" objectFit="contain" src={`https://image.tmdb.org/t/p/original/${item["poster_path"]}`} alt={item.title}/>
-            <Box px="2" textAlign="left">
-              <Heading as="h3" color="orange" my="2" size="md">{item.title}</Heading>
-              <span>released: {item["release_date"]}</span>
-              <StatGroup>
-                <Stat>
-                  <StatLabel size="md">Popularity</StatLabel>
-                  <StatNumber>{item["popularity"]}</StatNumber>
-                  {/*<StatHelpText>*/}
-                  {/*  <StatArrow type="increase" />*/}
-                  {/*  23.36%*/}
-                  {/*</StatHelpText>*/}
-                </Stat>
+      <SimpleGrid color="white" spacing="40px" columns={[1, null, 3]} width="90%" mx="auto" my="5em">
+        {movies.results.map((item, index) => {if (item["poster_path"]) {
+          function BasicUsage() {
+            const { isOpen, onOpen, onClose } = useDisclosure();
 
-                <Stat>
-                  <StatLabel>Vote AVG</StatLabel>
-                  <StatNumber>{item["vote_average"]}</StatNumber>
-                  {/*<StatHelpText>*/}
-                  {/*  <StatArrow type="decrease" />*/}
-                  {/*  9.05%*/}
-                  {/*</StatHelpText>*/}
-                </Stat>
-              </StatGroup>
+            return (
+              <>
+                <Box h="500px" bg="#111" cursor="pointer" onClick={onOpen}>
+                  <Image h="100%" w="100%" objectFit="cover" objectPosition="top" src={`https://image.tmdb.org/t/p/original/${item["poster_path"]}`} alt={item.title}/>
+                </Box>
 
-              <p>{item["vote_count"]} people think you should see this series</p>
-            </Box>
-          </Box>
-          )
+                <Modal isOpen={isOpen} onClose={onClose} size="xl">
+                  <ModalOverlay />
+                  <ModalContent>
+                    <ModalHeader>{item["original_title"]}</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                      <Image size="100%" objectFit="cover" objectPosition="center" src={`https://image.tmdb.org/t/p/original/${item["poster_path"]}`} alt={item.title}/>
+                      <Heading as="h6" m="0px">Synopsis</Heading>
+                      <Text>
+                        {item["overview"]}
+                      </Text>
+                      <StatGroup>
+                        <Stat>
+                          <StatLabel>Total Vote</StatLabel>
+                          <StatNumber>{item["vote_count"]}</StatNumber>
+                        </Stat>
+
+                        <Stat>
+                          <StatLabel as="h2">Popularity</StatLabel>
+                          <StatNumber>{item["popularity"]}</StatNumber>
+                        </Stat>
+                      </StatGroup>
+                    </ModalBody>
+                  </ModalContent>
+                </Modal>
+              </>
+            );
+          }
+         return <BasicUsage key={index}/>
         }})}
-      </Box>
+      </SimpleGrid>
     </Box>
   );
 }
