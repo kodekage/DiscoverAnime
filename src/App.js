@@ -20,7 +20,9 @@ import {
   StatGroup,
   InputGroup,
   Icon,
-  InputRightElement
+  InputRightElement,
+  Link,
+  CircularProgress
 } from "@chakra-ui/core";
 
 function App() {
@@ -32,6 +34,7 @@ function App() {
     e.preventDefault();
     updateQuery(value);
   }
+  let moviesToDisplay = [];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,7 +46,7 @@ function App() {
 
   return (
     <Box p={2} mx="auto" textAlign="center">
-      <Heading as="h2" color="white">Discover Anime</Heading>
+      <Heading as="h2" color="white">Anime</Heading>
 
       <form onSubmit={handleSubmit}>
       <InputGroup size="md" w="70%" m="auto">
@@ -91,9 +94,17 @@ function App() {
               </>
             );
           }
-         return <BasicUsage key={index}/>
+         moviesToDisplay.push(<BasicUsage key={index}/>)
         }})}
+        { moviesToDisplay }
       </SimpleGrid>
+      { moviesToDisplay.length === 0 ? <CircularProgress isIndeterminate color="green" marginBottom="3em"></CircularProgress> : null }
+      <Text color="#fff">
+        Developed by
+        <Link href="https://kodekage.netlify.app" isExternal color="teal.500"> Prosper Opara <Icon name="external-link" mx="2px" /></Link>
+        Data gotten from
+        <Link href="https://www.themoviedb.org/" isExternal color="teal.500"> TMBD <Icon name="external-link" mx="2px" /></Link>
+      </Text>
     </Box>
   );
 }
