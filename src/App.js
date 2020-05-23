@@ -46,7 +46,7 @@ function App() {
 
   return (
     <Box p={2} mx="auto" textAlign="center">
-      <Heading as="h2" color="white">Anime</Heading>
+      <Heading as="h2" color="white"><span>Discover</span>Anime</Heading>
 
       <form onSubmit={handleSubmit}>
       <InputGroup size="md" w="70%" m="auto">
@@ -110,9 +110,9 @@ function App() {
       /> : null }
       <Text color="#fff">
         Developed by
-        <Link href="https://kodekage.netlify.app" isExternal color="teal.500"> Prosper Opara <Icon name="external-link" mx="2px" /></Link>
+        <Link href="https://kodekage.netlify.app" isExternal color="orangered"> Prosper Opara <Icon name="external-link" mx="2px" /></Link>
         Data gotten from
-        <Link href="https://www.themoviedb.org/" isExternal color="teal.500"> TMBD <Icon name="external-link" mx="2px" /></Link>
+        <Link href="https://www.themoviedb.org/" isExternal color="orangered"> TMBD <Icon name="external-link" mx="2px" /></Link>
       </Text>
     </Box>
   );
