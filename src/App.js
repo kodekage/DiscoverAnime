@@ -22,7 +22,7 @@ import {
   Icon,
   InputRightElement,
   Link,
-  CircularProgress
+  Spinner
 } from "@chakra-ui/core";
 
 function App() {
@@ -54,6 +54,8 @@ function App() {
         <InputRightElement children={<Icon name="search" color="green.500" />}/>
       </InputGroup>
       </form>
+
+      <Heading as="h4" color="#fff">Search result for <span>{query}</span></Heading>
 
       <SimpleGrid color="white" spacing="40px" columns={[1, null, 3]} width="90%" mx="auto" my="5em">
         {movies.results.map((item, index) => {if (item["poster_path"]) {
@@ -98,7 +100,14 @@ function App() {
         }})}
         { moviesToDisplay }
       </SimpleGrid>
-      { moviesToDisplay.length === 0 ? <CircularProgress isIndeterminate color="green" marginBottom="3em"></CircularProgress> : null }
+      { moviesToDisplay.length === 0 ? <Spinner
+        thickness="4px"
+        speed="0.65s"
+        emptyColor="gray.200"
+        color="teal.500"
+        size="xl"
+        marginBottom="3em"
+      /> : null }
       <Text color="#fff">
         Developed by
         <Link href="https://kodekage.netlify.app" isExternal color="teal.500"> Prosper Opara <Icon name="external-link" mx="2px" /></Link>

@@ -9,6 +9,10 @@ body {
   background: #000;
 }
 
+span {
+  color: teal;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
