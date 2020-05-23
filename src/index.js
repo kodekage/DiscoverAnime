@@ -4,13 +4,13 @@ import { ThemeProvider } from "@chakra-ui/core";
 
 import './index.css';
 
-import theme from './theme';
+// import theme from './theme';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
+    <ThemeProvider>
       <App />
     </ThemeProvider>
   </React.StrictMode>,
